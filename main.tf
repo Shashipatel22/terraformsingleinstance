@@ -6,10 +6,10 @@ provider "aws" {
 }
 
 terraform {
-  required_version = "<= 0.14" #Forcing which version of Terraform needs to be used
+  required_version = "<= 1.3.2" #Forcing which version of Terraform needs to be used
   required_providers {
     aws = {
-      version = "<= 3.0.0" #Forcing which version of plugin needs to be used.
+      version = "<= 4.32.0" #Forcing which version of plugin needs to be used.
       source = "hashicorp/aws"
     }
   }
@@ -20,8 +20,8 @@ resource "aws_vpc" "default" {
     enable_dns_hostnames = true
     tags = {
         Name = "${var.vpc_name}"
-	Owner = "Sreeharsha Veerapalli"
-	environment = "${var.environment}"
+	Owner = "Shashi"
+	#environment = "${var.environment}"
     }
 }
 
@@ -52,17 +52,16 @@ resource "aws_subnet" "subnet2-public" {
     }
 }
 
-resource "aws_subnet" "subnet3-public" {
+resource "aws_subnet" "private-subnet" {
     vpc_id = "${aws_vpc.default.id}"
-    cidr_block = "${var.public_subnet3_cidr}"
+    cidr_block = "${var.private_subnet_cidr}"
     availability_zone = "us-east-1c"
 
     tags = {
-        Name = "${var.public_subnet3_name}"
+        Name = "${var.private_subnet_name}"
     }
 	
 }
-
 
 resource "aws_route_table" "terraform-public" {
     vpc_id = "${aws_vpc.default.id}"
@@ -109,23 +108,23 @@ resource "aws_security_group" "allow_all" {
 # }
 
 
-# resource "aws_instance" "web-1" {
-#     ami = var.imagename
-#     #ami = "ami-0d857ff0f5fc4e03b"
-#     #ami = "${data.aws_ami.my_ami.id}"
-#     availability_zone = "us-east-1a"
-#     instance_type = "t2.micro"
-#     key_name = "LaptopKey"
-#     subnet_id = "${aws_subnet.subnet1-public.id}"
-#     vpc_security_group_ids = ["${aws_security_group.allow_all.id}"]
-#     associate_public_ip_address = true	
-#     tags = {
-#         Name = "Server-1"
-#         Env = "Prod"
-#         Owner = "Sree"
-# 	CostCenter = "ABCD"
-#     }
-# }
+ resource "aws_instance" "web-1" {
+     #ami = var.imagename
+     ami = "ami-08c40ec9ead489470"
+     #ami = "${data.aws_ami.my_ami.id}"
+     availability_zone = "us-east-1a"
+    instance_type = "t2.micro"
+  key_name = "Laptopkey"
+  subnet_id = "${aws_subnet.subnet1-public.id}"
+     vpc_security_group_ids = ["${aws_security_group.allow_all.id}"]
+     associate_public_ip_address = true	
+     tags = {
+         Name = "shashi-1"
+         Env = "Prod"
+        Owner = "shashi"
+	CostCenter = "ABCD"
+    }
+ }
 
 ##output "ami_id" {
 #  value = "${data.aws_ami.my_ami.id}"
@@ -144,10 +143,3 @@ resource "aws_security_group" "allow_all" {
 # terraform init
 # terraform apply --var-file terraform.tfvars -var="aws_access_key=AAAAAAAAAAAAAAAAAA" -var="aws_secret_key=BBBBBBBBBBBBB" --auto-approve
 #https://discuss.devopscube.com/t/how-to-get-the-ami-id-after-a-packer-build/36
-Footer
-© 2022 GitHub, Inc.
-Footer navigation
-Terms
-Privacy
-Security
-Status
