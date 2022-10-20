@@ -15,5 +15,4 @@ private_subnet_name = "Terraform_Private_Subnet-testing"
 Main_Routing_Table = "Terraform_Main_table-testing"
 key_name = "LaptopKey"
 environment = "dev"
-Footer
-© 2022 GitHub, Inc.
+
