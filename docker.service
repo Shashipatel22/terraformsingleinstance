@@ -48,7 +48,3 @@ KillMode=process
 
 [Install]
 WantedBy=multi-user.target
-Footer
-© 2022 GitHub, Inc.
-Footer navigation
-Terms
